@@ -2,42 +2,30 @@ from operators import Operators
 import unittest
 
 class OperatorsTest(unittest.TestCase):
-    def setUp(self):
-        Operator_A = {
-            '1': 0.9,
-            '268': 5.1,
-            '46': 0.17,
-            '4620': 0.0,
-            '468': 0.15,
-            '4631': 0.15,
-            '4673': 0.9,
-            '46732': 1.1,
-        }
+    def test_best_operator_and_price_return_operator_a(self):
+        phone_number = 12344321
 
-        Operator_B = {
-            '1': 0.92,
-            '44': 0.5,
-            '46': 0.2,
-            '467': 1.0,
-            '48': 1.2,
-        }
-        ops = {
-            'Operator_A': Operator_A,
-            'Operator_B': Operator_B,
-        }
+        operator, best_price = Operators(phone_number).best_operator_and_price()
 
-    def tearDown(self):
-        Operator_A.delete()
-        Operator_B.delete()
-        ops.delete()
+        self.assertEqual(operator, "Operator_A")
+        self.assertEqual(best_price, 0.9)
 
-    def test_find_prefix(self):
-        prefixs = ["12345","1234","123","12","1"]
-        phone_number = "12344321"
+    def test_best_operator_and_price_return_operator_b(self):
+        phone_number = 44344321
 
-        prefix = Operators().find_prefix(phone_number, prefixs)
+        operator, best_price = Operators(phone_number).best_operator_and_price()
 
-        self.assertEqual(prefix, "1234")
+        self.assertEqual(operator, "Operator_B")
+        self.assertEqual(best_price, 0.5)
+
+    def test_best_operator_and_price_return_none(self):
+        phone_number = 812344321
+
+        operator, best_price = Operators(phone_number).best_operator_and_price()
+
+        self.assertEqual(operator, None)
+        self.assertEqual(best_price, None)
+
 
 if __name__ == '__main__':
     unittest.main()
