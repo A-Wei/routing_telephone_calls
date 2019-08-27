@@ -29,13 +29,15 @@ class Operators():
 
         return best_operator, best_price
 
-def main():
+def main(**kwargs):
     parser = argparse.ArgumentParser()
     parser.add_argument("-n", help="Number to call!", type=int)
     args = parser.parse_args()
 
-    if args.n is None:
+    if args.n is None and kwargs.get("number") is None:
         phone_number = input("Phone Number: ")
+    elif kwargs.get("number") is not None:
+        phone_number = kwargs.get("number")
     else:
         phone_number = str(args.n)
 
