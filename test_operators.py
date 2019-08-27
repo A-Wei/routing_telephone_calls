@@ -1,4 +1,6 @@
 import unittest
+import io
+import sys
 from operators import Operators, main
 
 class OperatorsTest(unittest.TestCase):
@@ -32,6 +34,27 @@ class MainTest(unittest.TestCase):
             main(number="44444")
 
         self.assertTrue("Phone number too short!" in str(context.exception))
+
+    def test_main_no_operator_found(self):
+        capturedOutput = io.StringIO()          # Create StringIO object
+        sys.stdout = capturedOutput
+
+        main(number="9876543210")
+
+        sys.stdout = sys.__stdout__
+        self.assertEqual("No operator found\n", capturedOutput.getvalue())
+
+    def test_main_operator_with_best_price(self):
+        capturedOutput = io.StringIO()          # Create StringIO object
+        sys.stdout = capturedOutput
+
+        main(number="462042600")
+
+        sys.stdout = sys.__stdout__
+        self.assertEqual(
+            "Operator_A has the best price $0.0/min for number 462042600\n",
+            capturedOutput.getvalue()
+        )
 
 
 if __name__ == '__main__':
